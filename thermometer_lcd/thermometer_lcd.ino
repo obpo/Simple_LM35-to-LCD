@@ -20,13 +20,17 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 // Definere variabler som modtager spændingen, og omregner det til temperatur
 float input = 0;
-int temp = 0;
+float temp = 0;
 
 // Function der køre en gang i starten af programmet
 void setup() {
   // Initializere analog pins
   pinMode(BUZZ, OUTPUT);
   pinMode(THERMOMETER, INPUT);
+
+  // Sætter refereance punktet til 1,1V
+  analogReference(INTERNAL);
+  analogRead(THERMOMETER);
 
   // Starter LCD'en
   lcd.begin(20, 4);
@@ -38,7 +42,7 @@ void setup() {
 void loop() {
   // Modtager spænding fra LM35 og omregner det til Celsius
   input = analogRead(THERMOMETER);
-  temp = (input*5*100)/1024;
+  temp = (input*1.1*100)/1024;
 
   // Nulstiller LCD
   lcd.clear();
